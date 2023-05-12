@@ -20,8 +20,10 @@
     import { getArtworkInfo } from "./api_handlers.js";
 
     const artworkId = "s00001";
-
+    
+    // await 使うために async function にする
     async function displayArtworkInfo(artworkId) {
+
       // もしロード画面が必要ならコメントアウトを外してください
       // const loadingElement = document.getElementById('loading');
       // loadingElement.style.display = 'block'; // Show loading element
@@ -30,7 +32,9 @@
       
       // これもロード画面関連 (前面のロード画面を消す)
       // loadingElement.style.display = 'none'; // Hide loading element
-    
+      
+      
+      // 画面に表示する
       const titleElement = document.getElementById('title');
       const introElement = document.getElementById('introduction');
       const imageElement = document.getElementById('image');
