@@ -8,30 +8,35 @@
 </head>
 <body>
   
-  <script>
-    async function getVisitorCount(visitorId) {
-      const response = await fetch(`/?visitor=${visitorId}`);
-      const data = await response.json();
-      return data.visitor_count;
+  <h1>来場者の取得</h1>
+  <p id="status">The visitor has already recorded.</p>
+  <p id="visitor">-1</p>
+
+  <script type="module">
+
+    import { getVisitorCount, recordVisitor } from "./api_handlers.js";
+
+    const artworkId = 's00001';
+
+    async function handleVisitor(artworkId) {
+
+      // もし前回来場していなければ、来場者を記録する
+      const previousVisit = localStorage.getItem(artworkId);
+      if (!previousVisit) {
+        const message = await recordVisitor(artworkId);
+        console.log(message);
+        localStorage.setItem(artworkId, true);
+
+        // ただの表示用
+        document.getElementById("status").textContent = "The visitor is being recorded NOW!";
+      }
+
+      // 来場者数を取得する
+      const visitorCount = await getVisitorCount(artworkId);
+      document.getElementById("visitor").textContent = visitorCount;
     }
-    
-    async function recordVisitor(artworkId) {
-      const response = await fetch('/?visitor', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ artwork_id: artworkId }),
-      });
-      const data = await response.json();
-      return data.message;
-    }
-    
-    async function getArtworkInfo(artworkId) {
-      const response = await fetch(`/?artwork=${artworkId}`);
-      const data = await response.json();
-      return data;
-    }
+
+    handleVisitor(artworkId);
     
   </script>
 </body>

@@ -8,30 +8,39 @@
 </head>
 <body>
   
-  <script>
-    async function getVisitorCount(visitorId) {
-      const response = await fetch(`/?visitor=${visitorId}`);
-      const data = await response.json();
-      return data.visitor_count;
+  <h1> アートワーク </h1>
+  <ul>
+    <li id="title"></li>
+    <li id="introduction"></li>
+    <li><img id="image" src="" alt=""></li>
+  </ul>
+  
+  <script type="module">
+
+    import { getArtworkInfo } from "./api_handlers.js";
+
+    const artworkId = "s00001";
+
+    async function displayArtworkInfo(artworkId) {
+      // もしロード画面が必要ならコメントアウトを外してください
+      // const loadingElement = document.getElementById('loading');
+      // loadingElement.style.display = 'block'; // Show loading element
+    
+      const artworkData = await getArtworkInfo(artworkId);
+      
+      // これもロード画面関連 (前面のロード画面を消す)
+      // loadingElement.style.display = 'none'; // Hide loading element
+    
+      const titleElement = document.getElementById('title');
+      const introElement = document.getElementById('introduction');
+      const imageElement = document.getElementById('image');
+    
+      titleElement.textContent = artworkData.title;
+      introElement.textContent = artworkData.introduction;
+      imageElement.src = artworkData.image_url;
     }
     
-    async function recordVisitor(artworkId) {
-      const response = await fetch('/?visitor', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ artwork_id: artworkId }),
-      });
-      const data = await response.json();
-      return data.message;
-    }
-    
-    async function getArtworkInfo(artworkId) {
-      const response = await fetch(`/?artwork=${artworkId}`);
-      const data = await response.json();
-      return data;
-    }
+    displayArtworkInfo(artworkId);
     
   </script>
 </body>

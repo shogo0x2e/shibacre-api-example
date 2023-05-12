@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="Access-Control-Allow-Origin" content="*">
   <title>Document</title>
 </head>
 <body>
@@ -11,17 +12,11 @@
   <h1> Total Visitors </h1>
   <p id="visitor">-1</p>
   
-  <script>
+  <script type="module">
     
-    const apiUrl = "https://digicre.shibalab.com/event/2023-omiya";
+    import { getVisitorCount } from "./api_handlers.js";
+    
     const visitorId = "s00001";
-
-    // 来場者数を取得する関数
-    async function getVisitorCount(visitorId) {
-      const response = await fetch(`${apiUrl}/?visitor=${visitorId}`);
-      const data = await response.json();
-      return data.visitor_count;
-    }
     
     // async で取得
     // トップレベルで await を呼び出すことは許されないらしい...。
