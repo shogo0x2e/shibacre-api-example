@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    async function getVisitorCount(visitorId) {
+      const response = await fetch(`/?visitor=${visitorId}`);
+      const data = await response.json();
+      return data.visitor_count;
+    }
+    
+    async function recordVisitor(artworkId) {
+      const response = await fetch('/?visitor', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ artwork_id: artworkId }),
+      });
+      const data = await response.json();
+      return data.message;
+    }
+    
+    async function getArtworkInfo(artworkId) {
+      const response = await fetch(`/?artwork=${artworkId}`);
+      const data = await response.json();
+      return data;
+    }
+    
+  </script>
+</body>
+</html>
